@@ -30,6 +30,7 @@ namespace Cirrious.MvvmCross.Plugins.File
         string PathCombine(string items0, string items1);
         string NativePath(string path);
 
+		bool TryMoveFolder(string from, string to, bool deleteExistingTo);
         void EnsureFolderExists(string folderPath);
         IEnumerable<string> GetFilesIn(string folderPath);
         void DeleteFile(string path);

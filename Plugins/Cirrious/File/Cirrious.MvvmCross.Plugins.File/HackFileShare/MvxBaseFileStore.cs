@@ -158,6 +158,34 @@ namespace Cirrious.MvvmCross.Plugins.File
             WriteFileCommon(path, writeMethod);
         }
 
+		public bool TryMoveFolder(string from, string to, bool deleteExistingTo)
+		{
+			try
+			{
+				var fullFrom = FullPath(from);
+				var fullTo = FullPath(to);
+
+				if (!System.IO.Directory.Exists(fullFrom))
+					return false;
+
+				if (System.IO.Directory.Exists(fullTo))
+				{
+					if (deleteExistingTo)
+						System.IO.Directory.Delete(fullTo);
+					else
+						return false;
+				}
+
+				System.IO.Directory.Move(fullFrom, fullTo);
+				return true;
+			}
+			catch (Exception exception)
+			{
+				MvxTrace.Error("Error during folder move {0} : {1} : {2}", from, to, exception.ToLongString());
+				return false;
+			}
+		}
+
         public bool TryMove(string from, string to, bool deleteExistingTo)
         {
             try
